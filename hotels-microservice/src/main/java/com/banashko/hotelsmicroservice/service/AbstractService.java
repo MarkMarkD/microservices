@@ -26,4 +26,8 @@ public abstract class AbstractService<T extends AbstractEntity> {
         return repository.saveAll(entities);
     }
 
+    public T getById(Long id) {
+        return repository.getOne(id);
+    }
+
 }

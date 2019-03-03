@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +25,7 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         this.classType = classType;
     }
 
-    @GetMapping
+    @GetMapping("")
     @Transactional
     public ResponseEntity<List<T>> getAllEntities() {
         log.debug("REST request to get all entities {}", classType.getSimpleName());
@@ -35,7 +33,15 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping
+    @GetMapping("/{id}")
+    @Transactional
+    public ResponseEntity<T> getById(@PathVariable Long id) {
+        log.debug("REST request to get entity by id: {}, {}", classType.getSimpleName(), id);
+        T entity = service.getById(id);
+        return new ResponseEntity<>(entity, HttpStatus.OK);
+    }
+
+    @PostMapping("")
     @Transactional
     public ResponseEntity<List<Long>> createEntities(@RequestBody List<T> entities) {
         log.debug("REST request to create new entities {}", classType.getSimpleName());
@@ -48,6 +54,5 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         List<T> result = service.saveAll(entities);
         return new ResponseEntity<>(result.stream().map(AbstractEntity::getId).collect(Collectors.toList()), HttpStatus.OK);
     }
-
 
 }
