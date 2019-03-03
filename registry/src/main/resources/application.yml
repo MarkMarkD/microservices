@@ -1,0 +1,15 @@
+spring:
+    application:
+        name: Registry
+server:
+  port: 8761
+eureka:
+  client:
+      registerWithEureka: false
+      fetchRegistry: false
+  instance:
+      lease-renewal-interval-in-seconds: 15
+      lease-expiration-duration-in-seconds: 70
+  server:
+    enableSelfPreservation: false
+
