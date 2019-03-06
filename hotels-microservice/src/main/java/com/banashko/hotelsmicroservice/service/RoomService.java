@@ -20,4 +20,18 @@ public class RoomService extends AbstractService<Room>{
                        AbstractSpecification<Room> specification) {
         super(repository, specification);
     }
+
+    public Boolean bookRoomById(Long id) {
+        Room foundRoom = repository.getOne(id);
+        if (foundRoom == null || checkIfRoomIsBooked(foundRoom))
+            return false;
+
+        foundRoom.setTypeOfRoomStatusId(2L);
+        repository.save(foundRoom);
+        return true;
+    }
+
+    private Boolean checkIfRoomIsBooked(Room room) {
+        return room.getTypeOfRoomStatusId().equals(2L);       // 1 = available, 2 = booked
+    }
 }

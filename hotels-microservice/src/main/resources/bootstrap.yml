@@ -1,0 +1,13 @@
+
+
+spring:
+    application:
+        name: HotelsMicroservice
+    cloud:
+        config:
+            fail-fast: false
+            uri: http://admin:${jhipster.registry.password}@localhost:8761/config
+
+            name: HotelsMicroservice
+
+

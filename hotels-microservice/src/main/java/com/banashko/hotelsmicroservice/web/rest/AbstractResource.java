@@ -3,6 +3,7 @@ package com.banashko.hotelsmicroservice.web.rest;
 
 import com.banashko.hotelsmicroservice.domain.AbstractEntity;
 import com.banashko.hotelsmicroservice.service.AbstractService;
+import com.banashko.hotelsmicroservice.service.RoomService;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         this.classType = classType;
     }
 
+    /**
+     * GET all entities
+     *
+     * @return : response entity with Status 200 OK all entities in body
+     */
     @GetMapping("")
     @Transactional
     public ResponseEntity<List<T>> getAllEntities() {
@@ -33,6 +39,12 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * GET entity by id
+     *
+     * @param id : the id of the entity
+     * @return : response entity with Status 200 OK and needed entity in body
+     */
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<T> getById(@PathVariable Long id) {
@@ -41,6 +53,12 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
+    /**
+     * POST create new entities
+     *
+     * @param entities : list of entities to create
+     * @return : response entity with Status 201 CREATED and list of ids of created entities, or Status 400 BAD REQUEST
+     */
     @PostMapping("")
     @Transactional
     public ResponseEntity<List<Long>> createEntities(@RequestBody List<T> entities) {
@@ -52,7 +70,7 @@ public abstract class AbstractResource<T extends AbstractEntity> {
         entities.removeIf(entity -> entity.getId() != null);
 
         List<T> result = service.saveAll(entities);
-        return new ResponseEntity<>(result.stream().map(AbstractEntity::getId).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(result.stream().map(AbstractEntity::getId).collect(Collectors.toList()), HttpStatus.CREATED);
     }
 
 }

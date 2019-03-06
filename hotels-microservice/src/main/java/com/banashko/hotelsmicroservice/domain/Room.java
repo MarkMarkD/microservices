@@ -14,25 +14,25 @@ public class Room extends AbstractEntity implements Serializable {
     private Float area;
 
     @ManyToOne                          //eager by default
-    @JoinColumn(name = "Typeofroomid")
+    @JoinColumn(name = "Typeofroomid", insertable = false, updatable = false)
     private TypeOfRoom typeOfRoom;
 
-    @Column(name = "Typeofroomid", insertable = false, updatable = false)
+    @Column(name = "Typeofroomid")
     private Long typeOfRoomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "Hotelid")
+    @JoinColumn(name = "Hotelid", insertable = false, updatable = false)
     private Hotel hotel;
 
-    @Column(name = "Hotelid", insertable = false, updatable = false)
+    @Column(name = "Hotelid")
     private Long hotelId;
 
     @ManyToOne
-    @JoinColumn(name = "Typeofroomstatusid")
+    @JoinColumn(name = "Typeofroomstatusid", insertable = false, updatable = false)
     private TypeOfRoomStatus typeOfRoomStatus;    // available/booked
 
-    @Column(name = "Typeofroomstatusid", insertable = false, updatable = false)
+    @Column(name = "Typeofroomstatusid")
     private Long typeOfRoomStatusId;
 
     public Float getArea() {

@@ -1,3 +1,10 @@
+
+logging:
+    level:
+        com.banashko.hotelsmicroservice: DEBUG
+        org.hibernate.SQL: DEBUG
+        org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
 spring:
     application:
         name: HotelsMicroservice

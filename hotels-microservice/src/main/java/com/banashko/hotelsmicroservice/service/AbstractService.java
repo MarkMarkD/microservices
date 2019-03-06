@@ -30,4 +30,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
         return repository.getOne(id);
     }
 
+    public T updateEntity(T entity) throws Exception {
+        return repository.save(entity);
+    }
 }
